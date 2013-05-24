@@ -15,13 +15,13 @@
 
 
 ### প্রয়োজনীয় লিংক
-* জ্যাঙ্গোর অফিশিয়াল ডকুমেন্টেশন - <a target="_blank" href="https://docs.djangoproject.com/en/1.5/">https://docs.djangoproject.com/en/1.5/</a>
+* জ্যাঙ্গোর অফিশিয়াল ডকুমেন্টেশন - <a href="https://docs.djangoproject.com/en/1.5/">https://docs.djangoproject.com/en/1.5/</a>
 
 
 ### যারা অবদান রাখছেন
-* আবু আশরাফ মাসনুন - <a target="_blank" href="http://masnun.me">http://masnun.me</a>
+* আবু আশরাফ মাসনুন - <a href="http://masnun.me">http://masnun.me</a>
 
-(এই বইতে আপনিও অবদান রাখতে পারেন । গিট রেপো ফর্ক করুন এবং পুল রিকুয়েস্ট পাঠান । বিস্তারিত আলোচনার জন্য - ‌<a target="_blank" href="http://pycharmers.net">PyCharmers</a> গ্রুপে যোগ দিন অথবা গিটহাব ইস্যু ব্যবহার করুন )
+(এই বইতে আপনিও অবদান রাখতে পারেন । গিট রেপো ফর্ক করুন এবং পুল রিকুয়েস্ট পাঠান । বিস্তারিত আলোচনার জন্য - ‌<a href="http://pycharmers.net">PyCharmers</a> গ্রুপে যোগ দিন অথবা গিটহাব ইস্যু ব্যবহার করুন )
 
 
 
