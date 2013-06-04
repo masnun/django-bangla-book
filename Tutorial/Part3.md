@@ -121,3 +121,67 @@
 
 ### জ্যাঙ্গোয় টেম্প্লেট 
 
+জ্যাঙ্গোতে টেম্প্লেটস থাকে এ্যাপ্লিকেশনের `templates` ডিরেক্টরীতে । আমরা `polls` ডিরেক্টরীতে `templates` নামে একটি ফোল্ডার তৈরি করি । এই ডিরেক্টরীতে আবার `polls` নামে আরেকটি ডিরেক্টরী তৈরি করি আমাদের টেম্প্লেটগুলোর জন্য । এখানে আমরা `index.html` নামে একটি ফাইল তৈরি করি । ফুল পাথ হবে - `polls/templates/polls/index.html` । কন্টেন্ট হবে এরকম - 
+
+	{% if latest_poll_list %}
+    	<ul>
+    	{% for poll in latest_poll_list %}
+        	<li><a href="/polls/{{ poll.id }}/">{{ poll.question }}</a></li>
+    	{% endfor %}
+    	</ul>
+	{% else %}
+    	<p>No polls are available.</p>
+	{% endif %}
+
+
+এখানে `{{ poll.id }}` এবং `{{ poll.question }}` হলো ডাইনামিক কন্টেন্ট । এই টেম্প্লেটটির জন্য ভিউ টি মডিফাই করে নেই - 
+
+	from django.http import HttpResponse
+	from django.template import Context, loader
+
+	from polls.models import Poll
+
+	def index(request):
+    	latest_poll_list = Poll.objects.order_by('-pub_date')[:5]
+    	template = loader.get_template('polls/index.html')
+    	context = Context({
+        	'latest_poll_list': latest_poll_list,
+    	})
+    	return HttpResponse(template.render(context))
+    	
+ এবার আমরা ব্রাউজারে আউটপুট দেখে নেই । 
+ 
+ এই উদাহরণে টেম্প্লেট রেন্ডার করার জন্য বেশ খানিকটা কোড লিখতে হয়েছে । এই কাজটা আমরা সহজে করতে পারি জ্যাঙ্গোর একটা শর্টকাট ব্যবহার করে । 
+ 
+	from django.shortcuts import render
+
+	from polls.models import Poll
+
+	def index(request):
+    	latest_poll_list = Poll.objects.all().order_by('-pub_date')[:5]
+    	context = {'latest_poll_list': latest_poll_list}
+    	return render(request, 'polls/index.html', context)
+ 
+ 
+ `render()` হচ্ছে আলোচ্য শর্টকাট । এরকম অনেক শর্টকাট আছে যেগুলো আমাদের নিত্য নৈমিত্তিক কাজগুলোকে সহজ করে দেয় । 
+ 
+### 404 ইরর পেইজ 
+
+ওয়েবের খুব কমন একটা http error হলো 404 । এটির মানে কন্টেন্ট এ্যাভেইলেবল না । এই ইরর থ্রো করার জন্য আমাদেরকে ভিউ থেকে আমাদের একটি `Http404` এক্সেপশন রেইজ করলেই চলবে । যেমন `detail()` ভিউটি হতে পারে এমন: 
+
+	from django.http import Http404
+
+	def detail(request, poll_id):
+    	try:
+        	poll = Poll.objects.get(pk=poll_id)
+    	except Poll.DoesNotExist:
+        	raise Http404
+    	return render(request, 'polls/detail.html', {'poll': poll})
+    	
+ এই ভিউটির জন্য টেম্প্লেট আমরা পরে দেখবো তবে টেস্ট করার জন্য `polls/details.html` ফাইলে নিম্নোক্ত কন্টেন্ট যোগ করা যায়: 
+ 
+	{{ poll }}
+ 
+ 
+ এবার ব্রাউজারে `http://localhost:8000/polls/34` ভিজিট করলে 404 ইরর মেসেজ পাওয়া যাবে । 
+ 	
